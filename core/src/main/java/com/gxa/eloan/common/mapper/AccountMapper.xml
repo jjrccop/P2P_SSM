@@ -27,7 +27,12 @@
       #{unreceiveprincipal,jdbcType=DECIMAL}, #{unreturnamount,jdbcType=DECIMAL}, #{remainborrowlimit,jdbcType=DECIMAL}
       )
   </insert>
-  <update id="updateByPrimaryKey" parameterType="com.gxa.eloan.common.domain.Account" >
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, 
+    unReceivePrincipal, unReturnAmount, remainBorrowLimit
+    from `account`
+  </select>
+  <update id="updateByPrimaryKey" parameterType="com.gxa.eloan.common.domain.Account">
     update `account`
     set tradePassword = #{tradepassword,jdbcType=VARCHAR},
       usableAmount = #{usableamount,jdbcType=DECIMAL},
@@ -40,15 +45,12 @@
       remainBorrowLimit = #{remainborrowlimit,jdbcType=DECIMAL}
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, 
+
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest,
     unReceivePrincipal, unReturnAmount, remainBorrowLimit
     from `account`
     where id = #{id,jdbcType=BIGINT}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap" >
-    select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, 
-    unReceivePrincipal, unReturnAmount, remainBorrowLimit
-    from `account`
-  </select>
+
 </mapper>
