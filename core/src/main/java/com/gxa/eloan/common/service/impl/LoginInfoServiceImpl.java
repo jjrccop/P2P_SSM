@@ -9,6 +9,9 @@ import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+
 @Service
 public class LoginInfoServiceImpl implements ILoginInfoService {
 
@@ -73,14 +76,27 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
      * @param password
      */
     @Override
-    public void login(String username, String password) {
-        LoginInfo loginInfo = logininfoMapper.login(username,password);
+    public LoginInfo login(String username, String password, HttpServletRequest request, int usertype) {
+        LoginInfo loginInfo = logininfoMapper.login(username,password,usertype);
+
+        Iplog iplog = new Iplog();
+        iplog.setIp(request.getRemoteAddr());
+        iplog.setUsername(username);
+        iplog.setLogintime(new Date());
+        //iplog.setUsertype((byte)LoginInfo.USER_WEB);
+
         if (loginInfo != null) {
             /* 将登录用户的数据，通过UserContext工具类，存放至session*/
             UserContext.putLoginInfo(loginInfo);
+            iplog.setState(Iplog.LOGIN_SUCCESS);
         } else {
-            throw new RuntimeException("用户名或密码错误，登录失败!");
+            iplog.setState(Iplog.LOGIN_FAILED);
         }
+
+        iIpLogService.add(iplog);
+
+        return loginInfo;
     }
+
 
 }

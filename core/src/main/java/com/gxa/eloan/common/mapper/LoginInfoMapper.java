@@ -23,9 +23,12 @@ public interface LoginInfoMapper {
      *
      * @param username
      * @param password
+     * @param usertype
      * @return
      */
     LoginInfo login(@Param("username") String username,
-                    @Param("password") String password);
+                    @Param("password") String password,
+                    @Param("usertype") int usertype);
+
 
 }

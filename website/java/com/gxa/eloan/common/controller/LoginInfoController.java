@@ -1,11 +1,14 @@
 package com.gxa.eloan.common.controller;
 
+import com.gxa.eloan.common.domain.LoginInfo;
 import com.gxa.eloan.common.service.ILoginInfoService;
 import com.gxa.eloan.common.util.JSONResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginInfoController {
@@ -36,8 +39,9 @@ public class LoginInfoController {
 
     @RequestMapping("login")
     @ResponseBody
-    public JSONResult login(String username, String password) {
+    public JSONResult login(String username, String password, HttpServletRequest request) {
 
+        LoginInfo loginInfo = iLoginInfoService.login(username, password, request, LoginInfo.USER_WEB);
         JSONResult json = new JSONResult();
         try {
             iLoginInfoService.login(username, password);

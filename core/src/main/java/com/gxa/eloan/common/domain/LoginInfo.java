@@ -9,11 +9,14 @@ public class LoginInfo {
 
     private Byte state;
 
-    private Byte usertype;
+    private Byte usertype=0;
 
     private Boolean admin;
 
     public static final byte STATE_NORMAL=0;
+
+    public static final int USER_MGR = 0;
+    public static final int USER_WEB = 1;
 
     public Long getId() {
         return id;

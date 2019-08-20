@@ -53,14 +53,27 @@
         where username = #{username,jdbcType=VARCHAR}
   </select>
     <sql id="base_column">
-  	id, username, password, state, userType
-   </sql>
+    id, username, password, state, userType
+    </sql>
 
     <select id="login" resultMap="BaseResultMap">
         select
         <include refid="base_column"/>
         from `logininfo`
         where username = #{username} and password = #{password}
+    </select>
+
+    <sql id="base_column">
+  	      id, username, password, state, userType
+    </sql>
+
+    <select id="login" resultMap="baseResultMap">
+        select
+        <include refid="base_column"/>
+        from `logininfo`
+        where  username = #{username}
+        and password = #{password}
+        and usertype = #{usertype}
     </select>
 
 </mapper>
