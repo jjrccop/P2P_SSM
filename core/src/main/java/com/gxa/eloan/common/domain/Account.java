@@ -3,7 +3,7 @@ package com.gxa.eloan.common.domain;
 import java.math.BigDecimal;
 
 public class Account {
-    private Integer id;
+    private Long id;
 
     private String tradepassword;
 
@@ -23,11 +23,11 @@ public class Account {
 
     private BigDecimal remainborrowlimit;
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

@@ -1,8 +1,10 @@
 package com.gxa.eloan.common.service.impl;
 
+import com.gxa.eloan.common.domain.Account;
 import com.gxa.eloan.common.domain.LoginInfo;
 import com.gxa.eloan.common.mapper.LoginInfoMapper;
 import com.gxa.eloan.common.service.ILoginInfoService;
+import com.gxa.eloan.common.service.IAccountService;
 import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
 
     @Autowired
     private LoginInfoMapper logininfoMapper;
+    @Autowired
+    private IAccountService iAccountService;
 
     /**
      * 检查用户名是否已存在
@@ -46,10 +50,19 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
             li.setPassword(password);
             li.setState(LoginInfo.STATE_NORMAL);
             logininfoMapper.insert(li);
+
+            Long id = li.getId();   //这样写的好处？？？
+            Account account = new Account();
+            account.setId(id);
+            iAccountService.add(account);
         } else {
             // 如果存在,直接抛错
             throw new RuntimeException("用户名已经存在!");
         }
+
+        // 初始化账户信息Account
+
+
     }
 
     /**

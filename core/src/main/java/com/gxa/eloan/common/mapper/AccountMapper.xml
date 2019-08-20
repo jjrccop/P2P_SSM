@@ -15,7 +15,7 @@
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from `account`
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </delete>
   <insert id="insert" parameterType="com.gxa.eloan.common.domain.Account" useGeneratedKeys="true" keyProperty="id" >
     insert into `account` (tradePassword, usableAmount, freezedAmount, 
@@ -38,13 +38,13 @@
       unReceivePrincipal = #{unreceiveprincipal,jdbcType=DECIMAL},
       unReturnAmount = #{unreturnamount,jdbcType=DECIMAL},
       remainBorrowLimit = #{remainborrowlimit,jdbcType=DECIMAL}
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </update>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
     select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, 
     unReceivePrincipal, unReturnAmount, remainBorrowLimit
     from `account`
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
     select id, tradePassword, usableAmount, freezedAmount, borrowLimit, version, unReceiveInterest, 

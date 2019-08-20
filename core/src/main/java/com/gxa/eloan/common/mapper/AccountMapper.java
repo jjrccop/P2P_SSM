@@ -4,11 +4,11 @@ import com.gxa.eloan.common.domain.Account;
 import java.util.List;
 
 public interface AccountMapper {
-    int deleteByPrimaryKey(Integer id);
+    int deleteByPrimaryKey(Long id);
 
     int insert(Account record);
 
-    Account selectByPrimaryKey(Integer id);
+    Account selectByPrimaryKey(Long id);
 
     List<Account> selectAll();
 
