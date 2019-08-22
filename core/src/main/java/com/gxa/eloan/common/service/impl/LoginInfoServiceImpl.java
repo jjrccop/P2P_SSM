@@ -9,6 +9,7 @@ import com.gxa.eloan.common.service.IIpLogService;
 import com.gxa.eloan.common.service.ILoginInfoService;
 import com.gxa.eloan.common.service.IAccountService;
 import com.gxa.eloan.common.service.IUserInfoService;
+import com.gxa.eloan.common.util.Init.AccountInit;
 import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,13 +46,16 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
             li.setUsername(username);
             li.setPassword(password);
             li.setState(LoginInfo.STATE_NORMAL);
+            li.setUsertype(LoginInfo.USER_WEB);
             logininfoMapper.insert(li);
             Long id = li.getId();
-            Account account = new Account();
+            Account account = new AccountInit().getInitAccount();
             account.setId(id);
             iAccountService.add(account);
             UserInfo userInfo = new UserInfo();
             userInfo.setId(id);
+            userInfo.setVersion(0);
+            userInfo.setBitstate((long)0);
             iUserInfoService.add(userInfo);
         } else {
             throw new RuntimeException("用户名已经存在!");

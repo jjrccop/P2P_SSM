@@ -9,14 +9,24 @@
     <result column="realName" property="realname" jdbcType="VARCHAR" />
     <result column="idNumber" property="idnumber" jdbcType="VARCHAR" />
     <result column="phoneNumber" property="phonenumber" jdbcType="VARCHAR" />
-    <result column="incomeGrade_id" property="incomegradeId" jdbcType="BIGINT" />
-    <result column="marriage_id" property="marriageId" jdbcType="BIGINT" />
-    <result column="kidCount_id" property="kidcountId" jdbcType="BIGINT" />
-    <result column="educationBackground_id" property="educationbackgroundId" jdbcType="BIGINT" />
     <result column="authScore" property="authscore" jdbcType="INTEGER" />
-    <result column="houseCondition_id" property="houseconditionId" jdbcType="BIGINT" />
     <result column="realauthid" property="realauthid" jdbcType="BIGINT" />
     <result column="email" property="email" jdbcType="VARCHAR" />
+    <association property="educationbackgroundItem" javaType="Systemdictionaryitem"
+                 column="educationBackground_id"
+                 select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
+    <association property="incomegradeItem" javaType="Systemdictionaryitem"
+                 column="incomeGrade_id"
+                 select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
+    <association property="marriageItem" javaType="Systemdictionaryitem"
+                 column="marriage_id"
+                 select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
+    <association property="kidcountItem" javaType="Systemdictionaryitem"
+                 column="kidCount_id"
+                 select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
+    <association property="houseconditionItem" javaType="Systemdictionaryitem"
+                 column="houseCondition_id"
+                 select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
   </resultMap>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
@@ -25,12 +35,12 @@
   </delete>
 
   <insert id="insert" parameterType="com.gxa.eloan.common.domain.UserInfo" useGeneratedKeys="true" keyProperty="id" >
-    insert into `userinfo` (version, bitState, realName, 
+    insert into `userinfo` (id,version, bitState, realName,
       idNumber, phoneNumber, incomeGrade_id, 
       marriage_id, kidCount_id, educationBackground_id, 
       authScore, houseCondition_id, realauthid, 
       email)
-    values (#{version,jdbcType=INTEGER}, #{bitstate,jdbcType=BIGINT}, #{realname,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=BIGINT},#{version,jdbcType=INTEGER}, #{bitstate,jdbcType=BIGINT}, #{realname,jdbcType=VARCHAR},
       #{idnumber,jdbcType=VARCHAR}, #{phonenumber,jdbcType=VARCHAR}, #{incomegradeId,jdbcType=BIGINT}, 
       #{marriageId,jdbcType=BIGINT}, #{kidcountId,jdbcType=BIGINT}, #{educationbackgroundId,jdbcType=BIGINT}, 
       #{authscore,jdbcType=INTEGER}, #{houseconditionId,jdbcType=BIGINT}, #{realauthid,jdbcType=BIGINT}, 

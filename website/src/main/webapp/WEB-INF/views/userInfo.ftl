@@ -111,13 +111,13 @@
                         <div class="col-sm-8">
                             <select class="form-control" id="educationbackgroundItem" name="educationbackgroundItem.id"
                                     style="width: 180px" autocomplate="off">
-<#--                                <#list educationBackgrounds as item>-->
-<#--                                    <option value="${item.id}">${item.title}</option>-->
-<#--                                </#list>-->
+                                <#list educationBackgrounds as item>
+                                    <option value="${item.id}">${item.title}</option>
+                                </#list>
                             </select>
-<#--                            <script type="text/javascript">-->
-<#--                                $("#educationbackgroundItem option[value=${(userinfo.educationbackgroundItem.id)!-1}]").attr("selected", true);-->
-<#--                            </script>-->
+                            <script type="text/javascript">
+                                $("#educationbackgroundItem option[value=${(userinfo.educationbackgroundItem.id)!-1}]").attr("selected", true);
+                            </script>
                         </div>
                     </div>
 
@@ -129,13 +129,13 @@
                             <select class="form-control" id="incomegradeItem" name="incomegradeItem.id"
                                     style="width: 180px"
                                     autocomplate="off">
-<#--                                <#list incomeGrades as item>-->
-<#--                                    <option value="${item.id}">${item.title}</option>-->
-<#--                                </#list>-->
+                                <#list incomeGrades as item>
+                                    <option value="${item.id}">${item.title}</option>
+                                </#list>
                             </select>
-<#--                            <script type="text/javascript">-->
-<#--                                $("#incomegradeItem option[value=${(userinfo.incomegradeItem.id)!-1}]").attr("selected", true);-->
-<#--                            </script>-->
+                            <script type="text/javascript">
+                                $("#incomegradeItem option[value=${(userinfo.incomegradeItem.id)!-1}]").attr("selected", true);
+                            </script>
                         </div>
                     </div>
 
@@ -146,13 +146,13 @@
                         <div class="col-sm-8">
                             <select class="form-control" id="marriageItem" name="marriageItem.id" style="width: 180px"
                                     autocomplate="off">
-<#--                                <#list marriages as item>-->
-<#--                                    <option value="${item.id}">${item.title}</option>-->
-<#--                                </#list>-->
+                                <#list marriages as item>
+                                    <option value="${item.id}">${item.title}</option>
+                                </#list>
                             </select>
-<#--                            <script type="text/javascript">-->
-<#--                                $("#marriageItem option[value=${(userinfo.marriageItem.id)!-1}]").attr("selected", true);-->
-<#--                            </script>-->
+                            <script type="text/javascript">
+                                $("#marriageItem option[value=${(userinfo.marriageItem.id)!-1}]").attr("selected", true);
+                            </script>
                         </div>
                     </div>
 
@@ -163,13 +163,13 @@
                         <div class="col-sm-8">
                             <select class="form-control" id="kidcountItem" name="kidcountItem.id" style="width: 180px"
                                     autocomplate="off">
-<#--                                <#list kidCounts as item>-->
-<#--                                    <option value="${item.id}">${item.title}</option>-->
-<#--                                </#list>-->
+                                <#list kidCounts as item>
+                                    <option value="${item.id}">${item.title}</option>
+                                </#list>
                             </select>
-<#--                            <script type="text/javascript">-->
-<#--                                $("#kidcountItem option[value=${(userinfo.kidcountItem.id)!-1}]").attr("selected", true);-->
-<#--                            </script>-->
+                            <script type="text/javascript">
+                                $("#kidcountItem option[value=${(userinfo.kidcountItem.id)!-1}]").attr("selected", true);
+                            </script>
                         </div>
                     </div>
 
@@ -180,13 +180,13 @@
                         <div class="col-sm-8">
                             <select class="form-control" id="houseconditionItem" name="houseconditionItem.id"
                                     style="width: 180px" autocomplate="off">
-<#--                                <#list houseConditions as item>-->
-<#--                                    <option value="${item.id}">${item.title}</option>-->
-<#--                                </#list>-->
+                                <#list houseConditions as item>
+                                    <option value="${item.id}">${item.title}</option>
+                                </#list>
                             </select>
-<#--                            <script type="text/javascript">-->
-<#--                                $("#houseconditionItem option[value=${(userinfo.houseconditionItem.id)!-1}]").attr("selected", true);-->
-<#--                            </script>-->
+                            <script type="text/javascript">
+                                $("#houseconditionItem option[value=${(userinfo.houseconditionItem.id)!-1}]").attr("selected", true);
+                            </script>
                         </div>
                     </div>
 

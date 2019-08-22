@@ -16,8 +16,6 @@ public class PersonalController {
     private IAccountService iAccountService;
     @Autowired
     private IIpLogService iIpLogService;
-    @Autowired
-    private IUserInfoService iUserInfoService;
 
     @RequestMapping("personal")
     public String personalCenter(Model model) {
@@ -28,17 +26,5 @@ public class PersonalController {
         model.addAttribute("iplog",iIpLogService.getCurrentIplog(loginInfo.getUsername()));
 
         return "personal";
-    }
-
-
-
-    @RequestMapping("userInfo")
-    public String userInfo(Model model){
-
-        LoginInfo loginInfo = UserContext.getLoginInfo();
-
-        model.addAttribute("userinfo", iUserInfoService.getCurrentUserinfo(loginInfo.getId()));
-
-        return "userInfo";
     }
 }

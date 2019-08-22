@@ -13,4 +13,6 @@ public interface SystemdictionaryitemMapper {
     List<Systemdictionaryitem> selectAll();
 
     int updateByPrimaryKey(Systemdictionaryitem record);
+
+    List<Systemdictionaryitem> selectByParentId(Long parentId);
 }

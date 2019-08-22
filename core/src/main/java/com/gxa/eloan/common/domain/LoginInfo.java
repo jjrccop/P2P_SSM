@@ -15,8 +15,8 @@ public class LoginInfo {
 
     public static final byte STATE_NORMAL=0;
 
-    public static final int USER_MGR = 0;
-    public static final int USER_WEB = 1;
+    public static final Byte USER_MGR = 0;
+    public static final Byte USER_WEB = 1;
 
     public Long getId() {
         return id;
