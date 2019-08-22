@@ -1,5 +1,7 @@
 package com.gxa.eloan.common.domain;
 
+import com.gxa.eloan.common.util.BitStatesUtils;
+
 public class UserInfo {
 
     private static Long INCOME_GRADES = 1L;
@@ -117,4 +119,19 @@ public class UserInfo {
     public void setRealauthid(Long realauthid) {
         this.realauthid = realauthid;
     }
+
+    public void addState(Long state) {
+        bitstate = BitStatesUtils.addState(bitstate, state);
+    }
+
+    // 移除状态码
+    public void  removeState(Long state) {
+        bitstate = BitStatesUtils.removeState(bitstate, state);
+    }
+
+    // 判断用户是否已经填写了基本资料
+    public boolean getIsBasicInfo() {
+        return BitStatesUtils.hasState(bitstate, BitStatesUtils.OP_USER_INFO);
+    }
+
 }

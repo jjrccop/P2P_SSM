@@ -2,13 +2,16 @@ package com.gxa.eloan.common.controller;
 
 import com.gxa.eloan.common.domain.LoginInfo;
 import com.gxa.eloan.common.domain.Systemdictionaryitem;
+import com.gxa.eloan.common.domain.UserInfo;
 import com.gxa.eloan.common.service.ISystemdictionaryitemService;
 import com.gxa.eloan.common.service.IUserInfoService;
+import com.gxa.eloan.common.util.JSONResult;
 import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class UserInfoController {
@@ -37,4 +40,20 @@ public class UserInfoController {
 
         return "userInfo";
     }
+
+
+    @RequestMapping("userInfo_save")
+    @ResponseBody
+    public JSONResult userInfoSave(UserInfo userInfo) {
+
+        JSONResult json = new JSONResult();
+        try {
+            iUserInfoService.updateBasicInfo(userInfo);
+        } catch (RuntimeException re) {
+            json.setSuccess(false);
+            json.setMsg(re.getMessage());
+        }
+        return json;
+    }
+
 }
