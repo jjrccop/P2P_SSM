@@ -1,15 +1,21 @@
 package com.gxa.eloan.common.service.impl;
 
 import com.gxa.eloan.common.domain.Account;
+import com.gxa.eloan.common.domain.Iplog;
 import com.gxa.eloan.common.domain.LoginInfo;
+import com.gxa.eloan.common.domain.UserInfo;
 import com.gxa.eloan.common.mapper.LoginInfoMapper;
+import com.gxa.eloan.common.service.IIpLogService;
 import com.gxa.eloan.common.service.ILoginInfoService;
 import com.gxa.eloan.common.service.IAccountService;
+import com.gxa.eloan.common.service.IUserInfoService;
 import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sun.rmi.runtime.Log;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.swing.plaf.IconUIResource;
 import java.util.Date;
 
 @Service
@@ -19,32 +25,19 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
     private LoginInfoMapper logininfoMapper;
     @Autowired
     private IAccountService iAccountService;
+    @Autowired
+    private IUserInfoService iUserInfoService;
+    @Autowired
+    private IIpLogService iIpLogService;
 
-    /**
-     * 检查用户名是否已存在
-     *
-     * @param username
-     * @return 返回用户个数
-     */
     @Override
     public int checkUsername(String username) {
         int count = logininfoMapper.selectCountByUsername(username);
         return count;
     }
-    /**
-     * 新用户注册
-     * @param username
-     * @param password
-     */
+
     @Override
     public void register(String username, String password) {
-        /*
-         * 逻辑思路
-         * 1. 判断用户名是否存在
-         * 2. 如果不存在,设值并保存这个对象
-         * 3. 如果存在,直接抛错
-         *
-         */
         int count = checkUsername(username);
 
         if (count <= 0) {
@@ -53,37 +46,28 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
             li.setPassword(password);
             li.setState(LoginInfo.STATE_NORMAL);
             logininfoMapper.insert(li);
-
-            Long id = li.getId();   //这样写的好处？？？
+            Long id = li.getId();
             Account account = new Account();
             account.setId(id);
             iAccountService.add(account);
+            UserInfo userInfo = new UserInfo();
+            userInfo.setId(id);
+            iUserInfoService.add(userInfo);
         } else {
-            // 如果存在,直接抛错
             throw new RuntimeException("用户名已经存在!");
         }
-
-        // 初始化账户信息Account
-
-
     }
 
-    /**
-     *
-     * 用户登陆
-     *
-     * @param username
-     * @param password
-     */
     @Override
     public LoginInfo login(String username, String password, HttpServletRequest request, int usertype) {
+
         LoginInfo loginInfo = logininfoMapper.login(username,password,usertype);
 
         Iplog iplog = new Iplog();
         iplog.setIp(request.getRemoteAddr());
         iplog.setUsername(username);
         iplog.setLogintime(new Date());
-        //iplog.setUsertype((byte)LoginInfo.USER_WEB);
+        iplog.setUsertype((byte)LoginInfo.USER_WEB);
 
         if (loginInfo != null) {
             /* 将登录用户的数据，通过UserContext工具类，存放至session*/
@@ -98,5 +82,10 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
         return loginInfo;
     }
 
+    @Override
+    public LoginInfo getCurrentAccount(Long id){
+        LoginInfo loginInfo = logininfoMapper.selectByPrimaryKey(id);
+        return loginInfo;
+    }
 
 }

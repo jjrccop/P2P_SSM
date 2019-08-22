@@ -42,14 +42,14 @@ public class LoginInfoController {
     public JSONResult login(String username, String password, HttpServletRequest request) {
 
         LoginInfo loginInfo = iLoginInfoService.login(username, password, request, LoginInfo.USER_WEB);
+
         JSONResult json = new JSONResult();
-        try {
-            iLoginInfoService.login(username, password);
-        } catch (RuntimeException re) {
+        if(null == loginInfo){
             json.setSuccess(false);
-            json.setMsg(re.getMessage());
+            json.setMsg("登录失败,用户名或密码无效");
         }
         return json;
     }
+
 
 }

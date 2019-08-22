@@ -2,6 +2,7 @@ package com.gxa.eloan.common.mapper;
 
 import com.gxa.eloan.common.domain.LoginInfo;
 import org.apache.ibatis.annotations.Param;
+import sun.rmi.runtime.Log;
 
 import java.util.List;
 
@@ -18,17 +19,9 @@ public interface LoginInfoMapper {
 
     int selectCountByUsername(String username);
 
-    /**
-     * 用户登录
-     *
-     * @param username
-     * @param password
-     * @param usertype
-     * @return
-     */
+    LoginInfo selectByUsername(String username);
+
     LoginInfo login(@Param("username") String username,
                     @Param("password") String password,
                     @Param("usertype") int usertype);
-
-
 }
