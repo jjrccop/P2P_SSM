@@ -7,4 +7,5 @@ public interface IUserInfoService{
     UserInfo getCurrentUserinfo(Long id);
     void updateUserinfo(UserInfo userInfo);
     void updateBasicInfo(UserInfo userInfo);
+    void bindPhone(String phoneNumber, String verifyCode);
 }

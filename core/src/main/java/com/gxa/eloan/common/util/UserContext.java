@@ -2,6 +2,7 @@ package com.gxa.eloan.common.util;
 
 
 import com.gxa.eloan.common.domain.LoginInfo;
+import com.gxa.eloan.common.vo.VerifyCodeVO;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -18,6 +19,7 @@ public class UserContext {
 
 
     public static final String USER_IN_SESSION = "logininfo";
+    public static final String VERIFYCODE_IN_SESSION = "verifyCodeVO_in_session";
 
 
     /**
@@ -43,5 +45,21 @@ public class UserContext {
 
         return (LoginInfo) getSession().getAttribute(USER_IN_SESSION);
     }
+
+    /*
+     * 得到session,并把verifyCodeVO存放到session中
+     */
+    public static void putVerifyCode(VerifyCodeVO verifyCodeVO) {
+        getSession().setAttribute(VERIFYCODE_IN_SESSION, verifyCodeVO);
+    }
+
+    /*
+     * 取出session中的verifyCodeVO
+     */
+    public static VerifyCodeVO getVerifyCode() {
+        VerifyCodeVO verifyCodeVO = (VerifyCodeVO) getSession().getAttribute(VERIFYCODE_IN_SESSION);
+        return verifyCodeVO;
+    }
+
 
 }

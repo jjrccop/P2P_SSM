@@ -134,4 +134,11 @@ public class UserInfo {
         return BitStatesUtils.hasState(bitstate, BitStatesUtils.OP_USER_INFO);
     }
 
+    // 判断是否已经绑定了手机
+    public boolean getIsBindPhone() {
+        return BitStatesUtils.hasState(this.bitstate,
+                BitStatesUtils.OP_BIND_PHONE);
+    }
+
+
 }
