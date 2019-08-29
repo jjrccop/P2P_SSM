@@ -45,5 +45,44 @@
     select id, ip, username, logintime, usertype, state, logininfoid
     from `iplog`
   </select>
+  <sql id="base_column">
+  	id, ip, state, userName, logininfoid,loginTime,userType
+  </sql>
+
+  <sql id="base_where">
+    <where>
+      <if test="beginDate!=null">
+        AND loginTime &gt;= #{beginDate}
+      </if>
+      <if test="endDate!=null">
+        AND loginTime &lt;= #{endDate}
+      </if>
+      <if test="userType>-1">
+        AND userType = #{userType}
+      </if>
+      <if test="state>-1">
+        AND state = #{state}
+      </if>
+      <if test="username!=null">
+        AND username = #{username}
+      </if>
+    </where>
+  </sql>
+
+  <select id="queryForCount" resultType="int">
+    SELECT count(id)
+    FROM iplog
+    <include refid="base_where"/>
+  </select>
+
+  <select id="query" resultMap="BaseResultMap">
+    SELECT
+    <include refid="base_column"/>
+    FROM iplog
+    <include refid="base_where"/>
+    ORDER BY loginTime DESC
+    LIMIT #{start},#{pageSize}
+  </select>
+
 
 </mapper>
