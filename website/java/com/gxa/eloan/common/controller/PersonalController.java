@@ -53,4 +53,17 @@ public class PersonalController {
         return json;
     }
 
+    @RequestMapping("bindEmail")
+    public String bingEmail(String code, Model model) {
+        System.out.println(code);
+        try {
+            iUserInfoService.bindEmail(code);
+            model.addAttribute("success", true);
+        } catch (Exception e) {
+            model.addAttribute("success", false);
+            model.addAttribute("msg", e.getMessage());
+        }
+        return "checkmail_result";
+    }
+
 }

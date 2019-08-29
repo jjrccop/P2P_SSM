@@ -140,5 +140,8 @@ public class UserInfo {
                 BitStatesUtils.OP_BIND_PHONE);
     }
 
-
+    public boolean getIsBindEmail() {
+        return BitStatesUtils.hasState(this.bitstate,
+                BitStatesUtils.OP_BIND_EMAIL);
+    }
 }

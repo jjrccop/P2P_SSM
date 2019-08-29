@@ -8,4 +8,5 @@ public interface IUserInfoService{
     void updateUserinfo(UserInfo userInfo);
     void updateBasicInfo(UserInfo userInfo);
     void bindPhone(String phoneNumber, String verifyCode);
+    void bindEmail(String uuid);
 }

@@ -1,14 +1,21 @@
 package com.gxa.eloan.common.service.impl;
 
 import com.gxa.eloan.common.domain.LoginInfo;
+import com.gxa.eloan.common.domain.Mailverify;
 import com.gxa.eloan.common.domain.UserInfo;
+import com.gxa.eloan.common.mapper.MailverifyMapper;
 import com.gxa.eloan.common.mapper.UserInfoMapper;
+import com.gxa.eloan.common.service.IMailVerifyService;
 import com.gxa.eloan.common.service.IUserInfoService;
 import com.gxa.eloan.common.service.IVerifyCodeService;
 import com.gxa.eloan.common.util.BitStatesUtils;
+import com.gxa.eloan.common.util.DateUtil;
+import com.gxa.eloan.common.util.SysConstant;
 import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
 
 @Service
 public class UserInfoServiceImpl implements IUserInfoService {
@@ -17,6 +24,8 @@ public class UserInfoServiceImpl implements IUserInfoService {
     private UserInfoMapper userInfoMapper;
     @Autowired
     private IVerifyCodeService iVerifyCodeService;
+    @Autowired
+    private MailverifyMapper mailverifyMapper;
 
     @Override
     public void add(UserInfo userInfo) {
@@ -76,6 +85,24 @@ public class UserInfoServiceImpl implements IUserInfoService {
             }
         }else{
             throw new RuntimeException("绑定失败");
+        }
+    }
+
+    public void bindEmail(String uuid) {
+        //根据uuid查村mailVerify对象
+        Mailverify mailVerify = mailverifyMapper.selectByUUID(uuid);
+        if (null != mailVerify
+                && DateUtil.getBetweenSecond(mailVerify.getSendtime(), new Date()) < SysConstant.EMAIL_VALID_DAY * 24 * 3600 ) {
+            //如果有 且在有效期内 的用户没有绑定邮箱
+            UserInfo userInfo = userInfoMapper.selectByPrimaryKey(mailVerify.getLogininfoId());
+            if ( !userInfo.getIsBindEmail()) {
+                //添加邮箱状态码  设置email属性
+                userInfo.addState(BitStatesUtils.OP_BIND_EMAIL);
+                userInfo.setEmail(mailVerify.getEmail());
+                updateUserinfo(userInfo);
+            }
+        }else{
+            throw new RuntimeException("验证邮箱地址错误!");
         }
     }
 
