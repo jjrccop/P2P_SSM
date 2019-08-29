@@ -1,6 +1,7 @@
 package com.gxa.eloan.common.mapper;
 
 import com.gxa.eloan.common.domain.LoginInfo;
+import com.gxa.eloan.common.query.LoginInfoQueryObject;
 import org.apache.ibatis.annotations.Param;
 import sun.rmi.runtime.Log;
 
@@ -23,5 +24,10 @@ public interface LoginInfoMapper {
 
     LoginInfo login(@Param("username") String username,
                     @Param("password") String password,
-                    @Param("usertype") int usertype);
+                    @Param("usertype") Byte usertype);
+
+    List<LoginInfo> queryForPage(LoginInfoQueryObject loginInfoQueryObject);
+
+    int queryForCount();
+
 }

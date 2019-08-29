@@ -99,7 +99,7 @@
                         </label>
                         <div class="col-sm-8">
                             <label>
-                                <input style="width: 250px;" class="form-control" value=${(userinfo.phonenumber)!''}>
+                                <input type="text" style="width: 250px;" class="form-control" value=${(userinfo.phonenumber)!''}>
                             </label>
                         </div>
                     </div>

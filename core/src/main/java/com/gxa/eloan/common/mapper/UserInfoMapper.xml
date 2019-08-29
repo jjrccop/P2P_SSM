@@ -12,19 +12,19 @@
     <result column="authScore" property="authscore" jdbcType="INTEGER" />
     <result column="realauthid" property="realauthid" jdbcType="BIGINT" />
     <result column="email" property="email" jdbcType="VARCHAR" />
-    <association property="educationbackgroundItem" javaType="Systemdictionaryitem"
+    <association property="educationbackgroundItem" javaType="com.gxa.eloan.common.domain.Systemdictionaryitem"
                  column="educationBackground_id"
                  select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
-    <association property="incomegradeItem" javaType="Systemdictionaryitem"
+    <association property="incomegradeItem" javaType="com.gxa.eloan.common.domain.Systemdictionaryitem"
                  column="incomeGrade_id"
                  select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
-    <association property="marriageItem" javaType="Systemdictionaryitem"
+    <association property="marriageItem" javaType="com.gxa.eloan.common.domain.Systemdictionaryitem"
                  column="marriage_id"
                  select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
-    <association property="kidcountItem" javaType="Systemdictionaryitem"
+    <association property="kidcountItem" javaType="com.gxa.eloan.common.domain.Systemdictionaryitem"
                  column="kidCount_id"
                  select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
-    <association property="houseconditionItem" javaType="Systemdictionaryitem"
+    <association property="houseconditionItem" javaType="com.gxa.eloan.common.domain.Systemdictionaryitem"
                  column="houseCondition_id"
                  select="com.gxa.eloan.common.mapper.SystemdictionaryitemMapper.selectByPrimaryKey"/>
   </resultMap>

@@ -4,19 +4,15 @@ import java.util.Date;
 
 public class Iplog {
     private Long id;
-
     private String ip;
-
     private String username;
-
     private Date logintime;
-
     private Byte usertype;
+    private Byte state;
+    private Long logininfoid;
 
-    private Boolean state;
-
-    public static final Boolean LOGIN_SUCCESS=true;
-    public static final Boolean LOGIN_FAILED=false;
+    public static final Byte LOGIN_SUCCESS=1;
+    public static final Byte LOGIN_FAILED=0;
 
     public Long getId() {
         return id;
@@ -31,7 +27,7 @@ public class Iplog {
     }
 
     public void setIp(String ip) {
-        this.ip = ip == null ? null : ip.trim();
+        this.ip = ip;
     }
 
     public String getUsername() {
@@ -39,7 +35,7 @@ public class Iplog {
     }
 
     public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+        this.username = username;
     }
 
     public Date getLogintime() {
@@ -58,11 +54,19 @@ public class Iplog {
         this.usertype = usertype;
     }
 
-    public Boolean getState() {
+    public Byte getState() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setState(Byte state) {
         this.state = state;
+    }
+
+    public Long getLogininfoid() {
+        return logininfoid;
+    }
+
+    public void setLogininfoid(Long logininfoid) {
+        this.logininfoid = logininfoid;
     }
 }

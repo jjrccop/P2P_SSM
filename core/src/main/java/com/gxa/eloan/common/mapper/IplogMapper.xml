@@ -7,7 +7,8 @@
     <result column="username" property="username" jdbcType="VARCHAR" />
     <result column="logintime" property="logintime" jdbcType="TIMESTAMP" />
     <result column="usertype" property="usertype" jdbcType="TINYINT" />
-    <result column="state" property="state" jdbcType="BIT" />
+    <result column="state" property="state" jdbcType="TINYINT" />
+    <result column="logininfoid" property="logininfoid" jdbcType="BIGINT" />
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
     delete from `iplog`
@@ -15,9 +16,9 @@
   </delete>
   <insert id="insert" parameterType="com.gxa.eloan.common.domain.Iplog" useGeneratedKeys="true" keyProperty="id" >
     insert into `iplog` (ip, username, logintime, 
-      usertype, state)
+      usertype, state, logininfoid)
     values (#{ip,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{logintime,jdbcType=TIMESTAMP}, 
-      #{usertype,jdbcType=TINYINT}, #{state,jdbcType=BIT})
+      #{usertype,jdbcType=TINYINT}, #{state,jdbcType=TINYINT}, #{logininfoid,jdbcType=BIGINT})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.gxa.eloan.common.domain.Iplog" >
     update `iplog`
@@ -25,22 +26,24 @@
       username = #{username,jdbcType=VARCHAR},
       logintime = #{logintime,jdbcType=TIMESTAMP},
       usertype = #{usertype,jdbcType=TINYINT},
-      state = #{state,jdbcType=BIT}
+      state = #{state,jdbcType=TINYINT},
+      logininfoid = #{logininfoid,jdbcType=BIGINT}
     where id = #{id,jdbcType=BIGINT}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
-    select id, ip, username, logintime, usertype, state
+    select id, ip, username, logintime, usertype, state, logininfoid
     from `iplog`
     where id = #{id,jdbcType=BIGINT}
   </select>
   <select id="selectByUsername" resultMap="BaseResultMap" parameterType="java.lang.String" >
-    select id, ip, username, logintime, usertype, state
+    select id, ip, username, logintime, usertype, state, logininfoid
     from `iplog`
     where id = (select max(id)
     from `iplog`) and username = #{username,jdbcType=VARCHAR}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, ip, username, logintime, usertype, state
+    select id, ip, username, logintime, usertype, state, logininfoid
     from `iplog`
   </select>
+
 </mapper>

@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <artifactId>p2p1.0.0</artifactId>
-        <groupId>com.gxa.eloan</groupId>
+        <groupId>com.gxa.p2p</groupId>
         <version>1.0.0</version>
         <!-- 读取上级目录下的pom.xml， 不显式的写出，默认也是同样的效果 -->
         <relativePath>../pom.xml</relativePath>
@@ -21,13 +21,6 @@
     </properties>
 
     <dependencies>
-
-        <dependency>
-            <groupId>com.gxa.eloan</groupId>
-            <artifactId>core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
         <!-- servlet-api -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -60,7 +53,14 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.gxa.p2p</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
+
 
 </project>

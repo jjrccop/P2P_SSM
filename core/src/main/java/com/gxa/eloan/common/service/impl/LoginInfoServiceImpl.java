@@ -5,6 +5,8 @@ import com.gxa.eloan.common.domain.Iplog;
 import com.gxa.eloan.common.domain.LoginInfo;
 import com.gxa.eloan.common.domain.UserInfo;
 import com.gxa.eloan.common.mapper.LoginInfoMapper;
+import com.gxa.eloan.common.query.LoginInfoQueryObject;
+import com.gxa.eloan.common.query.PageResultSet;
 import com.gxa.eloan.common.service.IIpLogService;
 import com.gxa.eloan.common.service.ILoginInfoService;
 import com.gxa.eloan.common.service.IAccountService;
@@ -18,6 +20,7 @@ import sun.rmi.runtime.Log;
 import javax.servlet.http.HttpServletRequest;
 import javax.swing.plaf.IconUIResource;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class LoginInfoServiceImpl implements ILoginInfoService {
@@ -63,20 +66,21 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
     }
 
     @Override
-    public LoginInfo login(String username, String password, HttpServletRequest request, int usertype) {
+    public LoginInfo login(String username, String password, HttpServletRequest request, Byte usertype) {
 
         LoginInfo loginInfo = logininfoMapper.login(username,password,usertype);
 
         Iplog iplog = new Iplog();
         iplog.setIp(request.getRemoteAddr());
-        iplog.setUsername(username);
-        iplog.setLogintime(new Date());
-        iplog.setUsertype((byte)LoginInfo.USER_WEB);
 
         if (loginInfo != null) {
             /* 将登录用户的数据，通过UserContext工具类，存放至session*/
             UserContext.putLoginInfo(loginInfo);
             iplog.setState(Iplog.LOGIN_SUCCESS);
+            iplog.setUsername(username);
+            iplog.setLogintime(new Date());
+            iplog.setUsertype(usertype);
+            iplog.setLogininfoid(loginInfo.getId());
         } else {
             iplog.setState(Iplog.LOGIN_FAILED);
         }
@@ -90,6 +94,27 @@ public class LoginInfoServiceImpl implements ILoginInfoService {
     public LoginInfo getCurrentAccount(Long id){
         LoginInfo loginInfo = logininfoMapper.selectByPrimaryKey(id);
         return loginInfo;
+    }
+
+
+    @Override
+    public PageResultSet queryForPage(LoginInfoQueryObject loginInfoQueryObject) {
+
+        int count = logininfoMapper.queryForCount();
+        PageResultSet pageResultSet;
+        if (count > 0) {
+            List<LoginInfo> list = logininfoMapper.queryForPage(loginInfoQueryObject);
+            pageResultSet = new PageResultSet(
+                    list,
+                    count,
+                    loginInfoQueryObject.getCurrentPage(),
+                    loginInfoQueryObject.getPageSize()
+            );
+        } else {
+            pageResultSet = PageResultSet.empty(loginInfoQueryObject.getPageSize());
+        }
+
+        return pageResultSet;
     }
 
 }

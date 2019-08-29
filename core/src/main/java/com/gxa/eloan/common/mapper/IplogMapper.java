@@ -10,7 +10,7 @@ public interface IplogMapper {
 
     Iplog selectByPrimaryKey(Long id);
 
-    List<Iplog> selectByUsername(String username);
+    Iplog selectByUsername(String username);
 
     List<Iplog> selectAll();
 

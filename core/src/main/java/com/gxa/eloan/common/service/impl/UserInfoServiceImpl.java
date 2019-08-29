@@ -54,8 +54,7 @@ public class UserInfoServiceImpl implements IUserInfoService {
             updateUserinfo(userInfo);
 
         } catch (Exception e) {
-            throw new RuntimeException("个人资料保存出错");
-
+            throw new RuntimeException(e.toString());
         }
     }
 

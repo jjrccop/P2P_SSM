@@ -6,6 +6,8 @@ import com.gxa.eloan.common.service.IIpLogService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class IpLogServiceImpl implements IIpLogService {
     @Autowired
@@ -16,7 +18,7 @@ public class IpLogServiceImpl implements IIpLogService {
     }
 
     public Iplog getCurrentIplog(String username){
-        Iplog iplog = iplogMapper.selectByUsername(username).get(0);
+        Iplog iplog = iplogMapper.selectByUsername(username);
         return iplog;
     }
 }
