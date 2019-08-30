@@ -17,12 +17,12 @@
 		<div class="container">
 			<div class="el-tip-info">
 				<h3>借款提示</h3>
-				<#if isSuccess>
-					<p>OK了，牛逼！</p>
-				</#if>
-				<#if !isSuccess>
+<#--				<#if isSuccess>-->
+<#--					<p>OK了，牛逼！</p>-->
+<#--				</#if>-->
+<#--				<#if !isSuccess>-->
 					<p>你目前有标正在申请的流程当中，不能再次发标；或者你恶意的进入了发标流程，请按照正常流程完成发标前的相关资料提交，谢谢！</p>
-				</#if>
+<#--				</#if>-->
 			</div>
 		</div>
 	</body>
