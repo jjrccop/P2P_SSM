@@ -144,4 +144,8 @@ public class UserInfo {
         return BitStatesUtils.hasState(this.bitstate,
                 BitStatesUtils.OP_BIND_EMAIL);
     }
+    public boolean getHasBidRequestInProcess() {
+        return BitStatesUtils.hasState(bitstate,
+                BitStatesUtils.OP_HAS_BIDREQUEST_PROCESS);
+    }
 }

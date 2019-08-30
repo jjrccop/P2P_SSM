@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.gxa.eloan.business.mapper.BidrequestMapper" >
+  <resultMap id="BaseResultMap" type="com.gxa.eloan.business.domain.Bidrequest" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="bidRequestType" property="bidrequesttype" jdbcType="TINYINT" />
+    <result column="bidRequestState" property="bidrequeststate" jdbcType="TINYINT" />
+    <result column="bidRequestAmount" property="bidrequestamount" jdbcType="DECIMAL" />
+    <result column="currentRate" property="currentrate" jdbcType="DECIMAL" />
+    <result column="monthes2Return" property="monthes2return" jdbcType="TINYINT" />
+    <result column="bidCount" property="bidcount" jdbcType="INTEGER" />
+    <result column="totalRewardAmount" property="totalrewardamount" jdbcType="DECIMAL" />
+    <result column="currentSum" property="currentsum" jdbcType="DECIMAL" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="note" property="note" jdbcType="VARCHAR" />
+    <result column="disableDate" property="disabledate" jdbcType="TIMESTAMP" />
+    <result column="disableDays" property="disabledays" jdbcType="TINYINT" />
+    <result column="minBidAmount" property="minbidamount" jdbcType="DECIMAL" />
+    <result column="applyTime" property="applytime" jdbcType="TIMESTAMP" />
+    <result column="publishTime" property="publishtime" jdbcType="TIMESTAMP" />
+    <result column="returnType" property="returntype" jdbcType="TINYINT" />
+
+    <association property="createUser" javaType="com.gxa.eloan.common.domain.LoginInfo" columnPrefix="cu_">
+      <id column="id" property="id"/>
+      <result column="username" property="username"/>
+    </association>
+  </resultMap>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+    insert into
+        bidrequest (
+              version,
+              bidRequestType,
+              bidRequestState,
+              bidRequestAmount,
+              currentRate,
+              monthes2Return,
+              bidCount,
+              totalRewardAmount,
+              currentSum,
+              title,
+              description,
+              note,
+              disableDate,
+              createuser_id,
+              disableDays,
+              minBidAmount,
+              applyTime,
+              publishTime,
+              returnType
+          )
+    values (
+            #{version,jdbcType=INTEGER},
+            #{bidrequesttype,jdbcType=TINYINT},
+            #{bidrequeststate,jdbcType=TINYINT},
+            #{bidrequestamount,jdbcType=DECIMAL},
+            #{currentrate,jdbcType=DECIMAL},
+            #{monthes2return,jdbcType=TINYINT},
+            #{bidcount,jdbcType=INTEGER},
+            #{totalrewardamount,jdbcType=DECIMAL},
+            #{currentsum,jdbcType=DECIMAL},
+            #{title,jdbcType=VARCHAR},
+            #{description,jdbcType=VARCHAR},
+            #{note,jdbcType=VARCHAR},
+            #{disabledate,jdbcType=TIMESTAMP},
+            #{createUser.id,jdbcType=BIGINT},
+            #{disabledays,jdbcType=TINYINT},
+            #{minbidamount,jdbcType=DECIMAL},
+            #{applytime,jdbcType=TIMESTAMP},
+            #{publishtime,jdbcType=TIMESTAMP},
+            #{returntype,jdbcType=TINYINT}
+           )
+  </insert>
+
+  <sql id="condition">
+    <where>
+      <if test="bidRequestState>-1">
+        AND b.bidRequestState = #{bidrequeststate}
+      </if>
+      <if test="bidRequestState==-1">
+        AND b.bidRequestState IN (1,7,8,9)
+      </if>
+      <if test="states!=null">
+        AND b.bidRequestState IN
+        <foreach collection="states" item="state" open="(" close=")" separator=",">
+          #{state}
+        </foreach>
+      </if>
+    </where>
+  </sql>
+
+
+  <select id="queryForCount" resultType="int">
+    select count(b.id)
+    from bidrequest b
+    <include refid="condition"/>
+  </select>
+
+
+  <sql id="base_column">
+	      b.id,
+	      b.version,
+	      b.bidRequestType,
+	      b.bidRequestState,
+	      b.bidRequestAmount,
+	      b.currentRate,
+	      b.monthes2Return,
+	      b.bidCount,
+	      b.totalRewardAmount,
+	      b.currentSum,
+	      b.title,
+	      b.description,b.note,
+	      b.disableDate,
+	      b.createuser_id,
+	      b.disableDays,
+	      b.minBidAmount,
+	      b.applyTime,
+	      b.publishTime,
+	      b.returnType,
+	      cu.id as cu_id ,
+	      cu.username as cu_username
+    </sql>
+
+  <select id="queryForList" resultMap="BaseResultMap">
+    select <include refid="base_column" />
+    from bidrequest b left join logininfo cu on b.createuser_id =cu.id
+    <include refid="condition" />
+    <if test="orderBy!=null">
+      ORDER BY ${orderBy}  ${orderType}
+    </if>
+    LIMIT #{start} , #{pageSize}
+  </select>
+
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select  <include refid="base_column" />
+    from bidrequest b join logininfo cu on b.createuser_id = cu.id
+    where b.id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <update id="updateByPrimaryKey"  >
+    update bidrequest
+        set
+          version = version+1,
+          bidRequestType = #{bidrequesttype,jdbcType=TINYINT},
+          bidRequestState = #{bidRequestState,jdbcType=TINYINT},
+          bidRequestAmount = #{bidRequestAmount,jdbcType=DECIMAL},
+          currentRate = #{currentRate,jdbcType=DECIMAL},
+          monthes2Return = #{monthes2Return,jdbcType=TINYINT},
+          bidCount = #{bidCount,jdbcType=INTEGER},
+          totalRewardAmount = #{totalRewardAmount,jdbcType=DECIMAL},
+          currentSum = #{currentSum,jdbcType=DECIMAL},
+          title = #{title,jdbcType=VARCHAR},
+          description = #{description,jdbcType=VARCHAR},
+          note = #{note,jdbcType=VARCHAR},
+          disableDate = #{disableDate,jdbcType=TIMESTAMP},
+          createuser_id = #{createUser.id,jdbcType=BIGINT},
+          disableDays = #{disableDays,jdbcType=TINYINT},
+          minBidAmount = #{minBidAmount,jdbcType=DECIMAL},
+          applyTime = #{applyTime,jdbcType=TIMESTAMP},
+          publishTime = #{publishTime,jdbcType=TIMESTAMP},
+          returnType = #{returnType,jdbcType=TINYINT}
+    where
+          id = #{id,jdbcType=BIGINT} AND version = #{version}
+  </update>
+</mapper>
