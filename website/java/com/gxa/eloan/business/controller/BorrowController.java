@@ -7,6 +7,7 @@ import com.gxa.eloan.common.domain.LoginInfo;
 import com.gxa.eloan.common.domain.UserInfo;
 import com.gxa.eloan.common.service.IAccountService;
 import com.gxa.eloan.common.service.IUserInfoService;
+import com.gxa.eloan.common.util.BitStatesUtils;
 import com.gxa.eloan.common.util.SysConstant;
 import com.gxa.eloan.common.util.UserContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +57,7 @@ public class BorrowController {
                 return "borrow_apply";
             } else {
                 //如果有 ,返回到 借款的等待审核页面
+                model.addAttribute("isSuccess",false);
                 return "borrow_apply_result";
             }
         } else {
@@ -65,8 +67,40 @@ public class BorrowController {
     }
 
     @RequestMapping("borrow_apply")
-    public String borrowApply(Bidrequest bidrequest){
+    public String borrowApply(Bidrequest bidrequest,Model model){
         iBidrequestService.apply(bidrequest);
-        return "redirect:/borrowInfo.do";
+
+        LoginInfo loginInfo = UserContext.getLoginInfo();
+        Long id = loginInfo.getId();
+        UserInfo userInfo = iUserInfoService.getCurrentUserinfo(id);
+        if (userInfo.getHasBidRequestInProcess()) {
+            model.addAttribute("isSuccess",true);
+            return "borrow_apply_result";
+        }
+        else return "redirect:/borrowInfo.do";
+    }
+
+    @RequestMapping("borrow_info")
+    public String borrowInfoDetail(Long id, Model model) {
+
+        Bidrequest bidRequest = iBidrequestService.getBidRequest(id);
+        //获得当前的借款人
+        UserInfo userInfo = iUserInfoService.getCurrentUserinfo(bidRequest.getCreateUser().getId());
+
+        //表示自己登陆的部分
+        model.addAttribute("self", false);
+
+        model.addAttribute("userInfo", userInfo);
+        model.addAttribute("bidRequest", bidRequest);
+
+        LoginInfo loginInfo = UserContext.getLoginInfo();
+        if (null != loginInfo) {  //表示当前有用户登陆
+            if (loginInfo.getId() == bidRequest.getCreateUser().getId()) {
+                model.addAttribute("self", true);
+            } else {
+                model.addAttribute("account", iAccountService.getCurrentAccount(loginInfo.getId()));
+            }
+        }
+        return "borrow_info";
     }
 }

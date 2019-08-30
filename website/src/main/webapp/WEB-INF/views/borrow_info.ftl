@@ -27,7 +27,7 @@
 			$(function(){
 				$("#retroclockbox").flipcountdown({
 					size:'xs',
-					beforeDateTime:"${bidRequest.disableDate?string('MM/dd/yyyy HH:mm:ss')}"
+					beforeDateTime:"${bidRequest.disabledate?string('MM/dd/yyyy HH:mm:ss')}"
 				});
 				
 				$("#bidBtn").on("click",function(){
@@ -112,21 +112,21 @@
 							<tr>
 								<td class="muted" width="80px">借款金额</td>
 								<td class="text-info" width="120px" style="padding-left: 10px;">
-									${bidRequest.bidRequestAmount}
+									${bidRequest.bidrequestamount}
 								</td>
 								<td class="muted" width="80px">年化利率</td>
 								<td class="text-info" style="padding-left: 10px;">
-									${bidRequest.currentRate}%
+									${bidRequest.currentrate}%
 								</td>
 							</tr>
 							<tr>
 								<td class="muted ">借款期限</td>
 								<td class="text-info" style="padding-left: 10px;">
-									${bidRequest.monthes2Return}月
+									${bidRequest.monthes2return}月
 								</td>
 								<td class="muted">总可得利息</td>
 								<td class="text-info" style="padding-left: 10px;">
-									${bidRequest.totalRewardAmount}
+									${bidRequest.totalrewardamount}
 								</td>
 							</tr>
 							<tr>
@@ -136,7 +136,7 @@
 								</td>
 								<td class="muted">最小投标</td>
 								<td class="text-info" style="padding-left: 10px;">
-									${bidRequest.minBidAmount}
+									${bidRequest.minbidamount}
 								</td>
 							</tr>
 							<tr>
@@ -158,7 +158,7 @@
 					<table style="height:110px;width:230px;">
 						<tr>
 							<td  class="muted">投标总数</td><td class="text-info" style="padding-left: 10px;">
-								${bidRequest.bidCount}
+								${bidRequest.bidcount}
 							</td>
 						</tr>
 						<tr>
@@ -178,7 +178,7 @@
 						</tr>
 					</table>
 					
-					<#if bidRequest.bidRequestState==1>
+					<#if bidRequest.bidrequeststate==1>
 						<#if self>
 							<br />
 							<a class="btn btn-danger btn-block" style="font-size: 18px;" href="#">
@@ -231,13 +231,13 @@
 						</#if>
 					</#if>
 					
-					<#if bidRequest.bidRequestState==4 || bidRequest.bidRequestState==5>
+					<#if bidRequest.bidrequeststate==4 || bidRequest.bidrequeststate==5>
 						<h4 class="text-primary">满标审核中</h4>
 					</#if>
-					<#if bidRequest.bidRequestState==7>
+					<#if bidRequest.bidrequeststate==7>
 						<h4 class="text-primary">还款中</h4>
 					</#if>
-					<#if bidRequest.bidRequestState==8>
+					<#if bidRequest.bidrequeststate==8>
 						<h4 class="text-primary">已还清</h4>
 					</#if>
 				</div>
@@ -257,7 +257,7 @@
 								</td>
 								<td class="muted text-right" width="140px;">借款额度</td>
 								<td width="150px;" style="padding-left: 10px;" class="text-info">
-									${bidRequest.bidRequestAmount}
+									${bidRequest.bidrequestamount}
 								</td>
 								<td class="muted text-right" width="140px;">性别</td>
 								<td width="150px;" style="padding-left: 10px;" class="text-info">

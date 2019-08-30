@@ -32,6 +32,19 @@ public class Bidrequestaudithistory {
 
     private Byte audittype;
 
+//    public String getAuditTypeDisplay() {
+//        switch (this.audittype) {
+//            case PUBLISH_AUDIT:
+//                return "发标审核";
+//            case FULL_AUDIT1:
+//                return "满标一审";
+//            case FULL_AUDIT2:
+//                return "满标二审";
+//            default:
+//                return "";
+//        }
+//    }
+
     public LoginInfo getApplier() {
         return applier;
     }

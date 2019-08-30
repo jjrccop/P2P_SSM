@@ -75,14 +75,14 @@
 
   <sql id="condition">
     <where>
-      <if test="bidRequestState>-1">
-        AND b.bidRequestState = #{bidrequeststate}
+      <if test="bidrequeststate>-1">
+        AND b.bidrequeststate = #{bidrequeststate}
       </if>
-      <if test="bidRequestState==-1">
-        AND b.bidRequestState IN (1,7,8,9)
+      <if test="bidrequeststate==-1">
+        AND b.bidrequeststate IN (1,7,8,9)
       </if>
       <if test="states!=null">
-        AND b.bidRequestState IN
+        AND b.bidrequeststate IN
         <foreach collection="states" item="state" open="(" close=")" separator=",">
           #{state}
         </foreach>
@@ -101,23 +101,23 @@
   <sql id="base_column">
 	      b.id,
 	      b.version,
-	      b.bidRequestType,
-	      b.bidRequestState,
-	      b.bidRequestAmount,
-	      b.currentRate,
-	      b.monthes2Return,
-	      b.bidCount,
-	      b.totalRewardAmount,
-	      b.currentSum,
+	      b.bidrequesttype,
+	      b.bidrequeststate,
+	      b.bidrequestamount,
+	      b.currentrate,
+	      b.monthes2return,
+	      b.bidcount,
+	      b.totalrewardamount,
+	      b.currentsum,
 	      b.title,
 	      b.description,b.note,
-	      b.disableDate,
+	      b.disabledate,
 	      b.createuser_id,
-	      b.disableDays,
-	      b.minBidAmount,
-	      b.applyTime,
-	      b.publishTime,
-	      b.returnType,
+	      b.disabledays,
+	      b.minbidamount,
+	      b.applytime,
+	      b.publishtime,
+	      b.returntype,
 	      cu.id as cu_id ,
 	      cu.username as cu_username
     </sql>
@@ -143,23 +143,23 @@
         set
           version = version+1,
           bidRequestType = #{bidrequesttype,jdbcType=TINYINT},
-          bidRequestState = #{bidRequestState,jdbcType=TINYINT},
-          bidRequestAmount = #{bidRequestAmount,jdbcType=DECIMAL},
-          currentRate = #{currentRate,jdbcType=DECIMAL},
-          monthes2Return = #{monthes2Return,jdbcType=TINYINT},
-          bidCount = #{bidCount,jdbcType=INTEGER},
-          totalRewardAmount = #{totalRewardAmount,jdbcType=DECIMAL},
-          currentSum = #{currentSum,jdbcType=DECIMAL},
+          bidRequestState = #{bidrequeststate,jdbcType=TINYINT},
+          bidRequestAmount = #{bidrequestamount,jdbcType=DECIMAL},
+          currentRate = #{currentrate,jdbcType=DECIMAL},
+          monthes2Return = #{monthes2return,jdbcType=TINYINT},
+          bidCount = #{bidcount,jdbcType=INTEGER},
+          totalRewardAmount = #{totalrewardamount,jdbcType=DECIMAL},
+          currentSum = #{currentsum,jdbcType=DECIMAL},
           title = #{title,jdbcType=VARCHAR},
           description = #{description,jdbcType=VARCHAR},
           note = #{note,jdbcType=VARCHAR},
-          disableDate = #{disableDate,jdbcType=TIMESTAMP},
+          disableDate = #{disabledate,jdbcType=TIMESTAMP},
           createuser_id = #{createUser.id,jdbcType=BIGINT},
-          disableDays = #{disableDays,jdbcType=TINYINT},
-          minBidAmount = #{minBidAmount,jdbcType=DECIMAL},
-          applyTime = #{applyTime,jdbcType=TIMESTAMP},
-          publishTime = #{publishTime,jdbcType=TIMESTAMP},
-          returnType = #{returnType,jdbcType=TINYINT}
+          disableDays = #{disabledays,jdbcType=TINYINT},
+          minBidAmount = #{minbidamount,jdbcType=DECIMAL},
+          applyTime = #{applytime,jdbcType=TIMESTAMP},
+          publishTime = #{publishtime,jdbcType=TIMESTAMP},
+          returnType = #{returntype,jdbcType=TINYINT}
     where
           id = #{id,jdbcType=BIGINT} AND version = #{version}
   </update>

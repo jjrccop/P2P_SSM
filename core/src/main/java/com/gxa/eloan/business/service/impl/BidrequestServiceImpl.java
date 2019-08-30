@@ -55,11 +55,6 @@ public class BidrequestServiceImpl implements IBidrequestService {
         Long id = loginInfo.getId();
         UserInfo userInfo = iUserInfoService.getCurrentUserinfo(id);
         Account account = iAccountService.getCurrentAccount(id); //剩余信用额度等信息会用到
-//        if(
-//                null == bidRequestVo.getBidrequestamount()
-//             || null == bidRequestVo.getCurrentrate()
-//             || null == bidRequestVo.getMinbidamount()
-//        ) return;
         if (
             //表示当前用户满足借款的基本条件
                 canApply(userInfo)
@@ -123,11 +118,12 @@ public class BidrequestServiceImpl implements IBidrequestService {
             //Current Sum
             bidRequest.setCurrentsum(SysConstant.ZERO);
 
+            // 给用户添加一个状态码
+            userInfo.addState(BitStatesUtils.OP_HAS_BIDREQUEST_PROCESS);
+
             // 新增借款
             bidRequestMapper.insert(bidRequest);
 
-            // 给用户添加一个状态码
-            userInfo.addState(BitStatesUtils.OP_HAS_BIDREQUEST_PROCESS);
             // 更新用户状态
             iUserInfoService.updateUserinfo(userInfo);
         }
@@ -140,6 +136,7 @@ public class BidrequestServiceImpl implements IBidrequestService {
     @Override
     public PageResultSet queryForPage(BidRequestQueryObject bidRequestQueryObject) {
         int count = bidRequestMapper.queryForCount(bidRequestQueryObject);
+        System.out.println(count);
         if (count > 0) {
             List<Bidrequest> list = bidRequestMapper.queryForList(bidRequestQueryObject);
             PageResultSet pageResultSet = new PageResultSet(list, count, bidRequestQueryObject.getCurrentPage(), bidRequestQueryObject.getPageSize());

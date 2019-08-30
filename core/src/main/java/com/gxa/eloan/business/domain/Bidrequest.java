@@ -1,9 +1,14 @@
 package com.gxa.eloan.business.domain;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gxa.eloan.common.domain.LoginInfo;
+import com.gxa.eloan.common.util.SysConstant;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bidrequest {
     private Long id;
@@ -45,6 +50,31 @@ public class Bidrequest {
     private Date publishtime;
 
     private Byte returntype;
+
+    public String getJsonString() {
+        Map<String, Object> json = new HashMap<>();
+        json.put("id", id);
+        json.put("username", createUser.getUsername());
+        json.put("title", title);
+        json.put("bidRequestAmount", bidrequestamount);
+        json.put("currentRate", currentrate);
+        json.put("monthes2Return", monthes2return);
+        json.put("returnType", getReturnTypeDisplay());
+        json.put("totalRewardAmount", totalrewardamount);
+        return JSONObject.toJSONString(json);
+    }
+
+    public BigDecimal getPersent() {
+        return currentsum.divide(bidrequestamount, SysConstant.DISPLAY_SCALE, RoundingMode.HALF_UP);
+    }
+
+    public String getReturnTypeDisplay() {
+        return returntype == SysConstant.RETURN_TYPE_MONTH_INTEREST ? "按月到期" : "等额本息";
+    }
+
+    public BigDecimal getRemainAmount() {
+        return bidrequestamount.subtract(currentsum);
+    }
 
     public LoginInfo getCreateUser() {
         return createUser;

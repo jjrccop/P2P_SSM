@@ -24,10 +24,10 @@
         h.id,
         h.state,
         h.remark,
-        h.auditTime,
-        h.applyTime,
-        h.bidRequestId,
-        h.auditType ,
+        h.audittime,
+        h.applytime,
+        h.bidrequestid,
+        h.audittype ,
         ap.id as ap_id,
         ap.username as ap_username,
         au.id as au_id,
@@ -38,9 +38,9 @@
           keyProperty="id">
     insert into bidrequestaudithistory (state, remark, auditTime,  applyTime, auditor_id, applier_id,
       bidRequestId, auditType)
-    values (#{state,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{auditTime,jdbcType=TIMESTAMP},
-      #{applyTime,jdbcType=TIMESTAMP}, #{auditor.id,jdbcType=BIGINT}, #{applier.id,jdbcType=BIGINT},
-      #{bidRequestId,jdbcType=BIGINT}, #{auditType,jdbcType=TINYINT})
+    values (#{state,jdbcType=TINYINT}, #{remark,jdbcType=VARCHAR}, #{audittime,jdbcType=TIMESTAMP},
+      #{applytime,jdbcType=TIMESTAMP}, #{auditor.id,jdbcType=BIGINT}, #{applier.id,jdbcType=BIGINT},
+      #{bidrequestid,jdbcType=BIGINT}, #{audittype,jdbcType=TINYINT})
   </insert>
 
   <select id="listAuditHistorayByBidRequest" resultMap="BaseResultMap">
@@ -48,7 +48,7 @@
     <include refid="base_column"/>
     from bidrequestaudithistory h join logininfo ap on ap.id = h.applier_id
     join logininfo au on au.id = h.auditor_id
-    where h.bidRequestId = #{id}
+    where h.bidrequestid = #{id}
     ORDER BY auditTime
   </select>
 </mapper>
